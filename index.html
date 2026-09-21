@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Book Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="hero">
+      <div class="hero-content">
+        <div class="hero-icon">📚</div>
+
+        <h1>Book Tracker</h1>
+
+        <p>Organize your reading journey and keep track of every book.</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="dashboard">
+        <div class="section-header">
+          <h2>Reading Dashboard</h2>
+          <p>Keep track of your reading progress at a glance.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">📚</div>
+            <p id="totalBooks" class="card-value">0</p>
+            <h3>Total Books</h3>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">✓</div>
+            <p id="completedBooks" class="card-value">0</p>
+            <h3>Completed</h3>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">📖</div>
+            <p id="readingBooks" class="card-value">0</p>
+            <h3>Reading</h3>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">−</div>
+            <p id="didnotfinishBooks" class="card-value">0</p>
+            <h3>DNF</h3>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">○</div>
+            <p id="toReadBooks" class="card-value">0</p>
+            <h3>To Read</h3>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">★</div>
+            <p id="averageRating" class="card-value">★ 0.0</p>
+            <h3>Average Rating</h3>
+          </article>
+        </div>
+      </section>
+
+      <section class="insights">
+        <div class="section-header">
+          <h2>Reading Insights</h2>
+          <p>View your reading activity and book distribution.</p>
+        </div>
+
+        <div class="charts">
+          <div class="panel chart-panel">
+            <h3>Genre Distribution</h3>
+
+            <canvas id="genreChart"></canvas>
+
+            <div id="genreEmpty" class="empty-chart">
+              <div class="empty-icon">📚</div>
+              <h4>No books yet</h4>
+              <p>Add your first book to see genre statistics.</p>
+            </div>
+          </div>
+
+          <div class="panel chart-panel">
+            <h3>Reading Status</h3>
+
+            <canvas id="statusChart"></canvas>
+
+            <div id="statusEmpty" class="empty-chart">
+              <div class="empty-icon">📖</div>
+              <h4>No books yet</h4>
+              <p>Add your first book to see status statistics.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <h2>Add a Book</h2>
+          <p>Record the details of a book and track your reading progress.</p>
+        </div>
+
+        <form id="bookForm" class="book-form">
+          <div class="form-section">
+            <h3>Book Information</h3>
+
+            <div class="book-grid">
+              <div class="form-group">
+                <label for="title">Book Title</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Enter book title"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="author">Author</label>
+                <input
+                  type="text"
+                  id="author"
+                  name="author"
+                  placeholder="Enter author name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="genre">Main Genre</label>
+                <select id="genre" name="genre"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="subgenre">Subgenre</label>
+                <select id="subgenre" name="subgenre">
+                  <option value="">Select Main Genre First</option>
+                </select>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="characters">Main Characters</label>
+                <input
+                  type="text"
+                  id="characters"
+                  name="characters"
+                  placeholder="Separate names with commas"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-section">
+              <h3>Reading Details</h3>
+
+              <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" name="startDate" />
+              </div>
+
+              <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate" />
+              </div>
+
+              <div class="form-group">
+                <label for="status">Reading Status</label>
+
+                <select id="status" name="status">
+                  <option value="">Select Status</option>
+                  <option>TBR</option>
+                  <option>Reading</option>
+                  <option>Completed</option>
+                  <option>DNF</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Review</h3>
+
+              <div class="form-group">
+                <label for="rating">Rating</label>
+
+                <select id="rating" name="rating">
+                  <option value="">Select Rating</option>
+                  <option>⭐☆☆☆☆</option>
+                  <option>⭐⭐☆☆☆</option>
+                  <option>⭐⭐⭐☆☆</option>
+                  <option>⭐⭐⭐⭐☆</option>
+                  <option>⭐⭐⭐⭐⭐</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="lesson">Reflection</label>
+
+                <textarea
+                  id="lesson"
+                  name="lesson"
+                  rows="5"
+                  placeholder="What did you learn or think about this book?"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="full-width">
+            <button id="saveBookBtn" type="submit" class="save-btn">
+              Save Book
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <h2>My Reading Library</h2>
+          <p>View and manage the books in your collection.</p>
+        </div>
+
+        <div id="bookLibrary"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Book Tracker</p>
+    </footer>
+
+    <div id="toastContainer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="js/books.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/genres.js"></script>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
