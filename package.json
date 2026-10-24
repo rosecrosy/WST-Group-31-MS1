@@ -1,23 +1,12 @@
 {
-  "name": "wst-ms1-book-tracker",
+  "name": "book-tracker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Backend for the Book Tracker web application",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rosecrosy/WST-Group-31-MS1.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/rosecrosy/WST-Group-31-MS1/issues"
-  },
-  "homepage": "https://github.com/rosecrosy/WST-Group-31-MS1#readme",
   "dependencies": {
     "express": "^5.3.0"
   }

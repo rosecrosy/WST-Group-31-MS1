@@ -807,140 +807,20 @@ These features are intentionally documented as future improvements rather than c
 
 ---
 
+# 📌 Project Status
+
+**Milestone:** Milestone 1
+**Project Type:** Interactive Frontend Web Application
+**Group:** Group 31
+**Status:** Frontend development and refinement
 
 ---
-
-# 🚀 Milestone 2 – Backend-Supported Web Application
-
-## Overview
-
-For Milestone 2 of MO-IT161 – Web Systems and Technology, Book Tracker was enhanced with a lightweight backend using **Node.js and Express.js**.
-
-The purpose of this milestone is to integrate the existing frontend with a backend API, enabling book records to be created, retrieved, updated, and deleted through server-side operations.
-
-The original Book Tracker features and user interface have been retained while replacing browser-based book storage with backend-supported data persistence.
-
-## Backend-Supported Features
-
-The application now supports the following backend operations:
-
-- **Retrieve Books** – Fetches saved book records from the backend.
-- **Add Books** – Accepts new book records through an API request.
-- **Update Books** – Modifies existing book records.
-- **Delete Books** – Removes selected book records.
-- **Persistent Storage** – Stores book records in a local JSON file.
-- **Request Validation** – Checks required book information before saving.
-- **Error Handling** – Returns appropriate HTTP status codes and JSON error messages for invalid requests and missing records.
-
-## Technologies Used
-
-- **Node.js** – JavaScript runtime for the backend.
-- **Express.js** – Handles API routes and HTTP requests.
-- **JavaScript Fetch API** – Connects the frontend to the backend.
-- **JSON File Storage** – Stores book records in `data/books.json`.
-- **GitHub** – Version control and project repository.
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api` | Checks whether the API is running. |
-| GET | `/api/books` | Retrieves all book records. |
-| POST | `/api/books` | Adds a new book record. |
-| PUT | `/api/books/:id` | Updates an existing book record. |
-| DELETE | `/api/books/:id` | Deletes a book record. |
-
-## Data Persistence
-
-Book records are stored in `data/books.json`, allowing the application to retain saved records beyond the current browser session.
-
-The backend reads and writes this file when book records are retrieved or modified. The data file is generated automatically by the server when it does not yet exist.
-
-**Storage limitation:** The current implementation uses local JSON file storage rather than a cloud database. The records are stored on the computer running the server and are not automatically synchronized across devices.
-
-## Frontend–Backend Integration
-
-The frontend communicates with the Express.js API through the Fetch API.
-
-The `bookService.js` module handles asynchronous requests for retrieving, adding, updating, and deleting book records. The main application uses these operations to refresh the reading library, dashboard statistics, and charts after changes.
-
-This structure separates data operations from the main user interface logic and demonstrates communication between frontend and backend technologies.
-
-## Testing and Refinement
-
-The backend-supported application was tested using multiple scenarios:
-
-- Adding, retrieving, updating, and deleting book records.
-- Checking whether records remain available after browser refreshes.
-- Verifying data persistence after server restarts.
-- Submitting a book with an empty title.
-- Attempting to update or delete nonexistent book records.
-- Sending malformed JSON requests.
-- Regression testing existing features, including genre and subgenre selection, reading status, ratings, reflections, and dashboard charts.
-
-Testing confirmed that the main book management operations work as intended and that invalid requests receive appropriate error responses.
-
-## How to Run the Application
-
-1. Install [Node.js](https://nodejs.org/).
-2. Download or clone this repository.
-3. Open the project folder in a terminal.
-4. Install the project dependencies:
-
-   ```bash
-   npm install
-   ```
-
-5. Start the Express server:
-
-   ```bash
-   node server.js
-   ```
-
-6. Open the application at:
-
-   `http://localhost:3000`
-
-   Keep the server running while using the application.
-
-## Project Structure – Milestone 2
-
-```text
-Book-Tracker/
-├── index.html
-├── style.css
-├── server.js
-├── package.json
-├── package-lock.json
-├── README.md
-├── data/
-│   └── books.json
-└── js/
-    ├── app.js
-    ├── bookService.js
-    ├── books.js
-    ├── charts.js
-    ├── genres.js
-    ├── storage.js
-    └── ui.js
-```
-
-The `data/books.json` file is created by the server when needed and is excluded from version control. The project source code and dependency files should be committed to GitHub.
-
-## Milestone 2 Outcome
-
-Milestone 2 builds on the interactive frontend developed in Milestone 1 by introducing backend-supported book management and persistent file storage.
-
-The implementation demonstrates frontend–backend integration, asynchronous API requests, basic server-side validation, error handling, and testing while keeping the application lightweight and aligned with its original purpose.
-
 
 ## 📜 Academic Project
 
 **Course:** MO-IT161 – Web Systems and Technology
 **Program:** Bachelor of Science in Information Technology
-**Milestone:** 
-Milestone 1 – Interactive Frontend Web Application 
-Milestone 2 – Backend-Supported Web Application
+**Milestone:** Milestone 1 – Interactive Frontend Web Application
 **Group:** **Group 31**
 **Academic Year:** 2026–2027
 

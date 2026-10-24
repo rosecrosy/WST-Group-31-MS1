@@ -20,7 +20,11 @@ genreSelect.addEventListener("change", () => {
   loadSubgenres(genreSelect.value);
 });
 
-refreshUI();
+refreshUI().catch((error) => {
+  console.error("Unable to load books:", error);
+
+  showToast("Unable to Load Books", error.message);
+});
 
 // ===================================
 // Delete Book
@@ -31,15 +35,20 @@ window.deleteBookHandler = async function (bookId) {
     "Are you sure you want to remove this book from your bookshelf?",
   );
 
-  if (!confirmed) return;
+  if (!confirmed) {
+    return;
+  }
 
   try {
     await deleteBook(bookId);
+
     await refreshUI();
 
     showToast("Book Removed", "The book has been removed from your bookshelf.");
   } catch (error) {
-    showToast("Error", error.message);
+    console.error("Unable to delete book:", error);
+
+    showToast("Unable to Delete Book", error.message);
   }
 };
 
@@ -55,41 +64,64 @@ async function handleBookSubmit(event) {
   }
 
   const formData = new FormData(bookForm);
-
   const bookData = createBook(formData);
+  const wasEditing = Boolean(window.editingBookId);
 
+  if (wasEditing) {
+    bookData.id = window.editingBookId;
+  }
+
+  // Save to the backend
   try {
-    if (window.editingBookId) {
-      bookData.id = window.editingBookId;
-
+    if (wasEditing) {
       await updateBook(bookData);
-      window.editingBookId = null;
+    } else {
+      await addBook(bookData);
+    }
+  } catch (error) {
+    console.error("Unable to save book:", error);
 
-      document.getElementById("saveBookBtn").textContent = "Save Book";
+    showToast("Unable to Save Book", error.message);
 
+    return;
+  }
+
+  // Reset editing state after successful save
+  window.editingBookId = null;
+
+  document.getElementById("saveBookBtn").textContent = "Save Book";
+
+  bookForm.reset();
+
+  subgenreSelect.innerHTML = `
+    <option value="">Select Main Genre First</option>
+  `;
+
+  // Reload books from the backend
+  try {
+    await refreshUI();
+
+    if (wasEditing) {
       showToast(
         "Reading Journey Updated",
         `"${bookData.title}" has been updated successfully.`,
       );
     } else {
-      await addBook(bookData);
-
       showToast(
         "Book Added",
         `"${bookData.title}" has been added to your reading library.`,
       );
     }
-
-    await refreshUI();
-
-    bookForm.reset();
-
-    subgenreSelect.innerHTML = `
-    <option value="">Select Main Genre First</option>
-  `;
   } catch (error) {
-    showToast("Error", error.message);
+    console.error("Unable to refresh book library:", error);
+
+    showToast(
+      "Book Saved",
+      "Your book was saved, but the library could not refresh. Reload the page.",
+    );
   }
+
+  bookForm.reset();
 
   // Reset subgenre after form reset
   subgenreSelect.innerHTML = `
@@ -226,21 +258,17 @@ function loadSubgenres(mainGenre) {
 
 window.loadSubgenres = loadSubgenres;
 
-/* ===================================
-   Refresh UI
-=================================== */
+// ===================================
+// Refresh UI
+// ===================================
 
 async function refreshUI() {
-  try {
-    window.books = await getBooks();
+  window.books = await getBooks();
 
-    renderLibrary();
-    updateDashboard();
-    updateGenreChart();
-    updateStatusChart();
-  } catch (error) {
-    showToast("Error", error.message);
-  }
+  renderLibrary();
+  updateDashboard();
+  updateGenreChart();
+  updateStatusChart();
 }
 
 /* ===================================

@@ -1,11 +1,8 @@
-
+# Dependencies
 node_modules/
-data/books.json
+
+# Environment variables and secrets
 .env
 
-# Ignore duplicate copies
-.git - Copy/
-data - Copy/
-js - Copy/
-node_modules - Copy/
-package-lock - Copy.json
+# Temporary backup of the original working project
+/WST-Group-31-MS1-main/
