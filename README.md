@@ -2,380 +2,227 @@
 
 A browser-based interactive book tracking application developed for **MO-IT161 – Web Systems and Technology**.
 
-The application allows users to organize their personal reading collection, record book information, monitor reading progress, and view reading statistics through an interactive dashboard.
+Book Tracker helps users organize their personal reading collection, track reading progress, record ratings and reflections, and view reading statistics through an interactive dashboard.
+
+The project is developed across two milestones:
+
+- **Milestone 1 (MS1):** Interactive frontend web application built with HTML, CSS, and JavaScript.
+- **Milestone 2 (MS2):** Backend development using Node.js, Express.js, and a JSON file for persistent book storage, integrated with the existing frontend.
 
 ---
 
-## 👥 Project Information
+## 📌 Project Information
 
-| Information       | Details                                            |
-| ----------------- | -------------------------------------------------- |
-| **Course**        | MO-IT161 – Web Systems and Technology              |
-| **Program**       | Bachelor of Science in Information Technology      |
-| **Milestone**     | Milestone 1 – Interactive Frontend Web Application |
-| **Group**         | **Group 31**                                       |
-| **Academic Year** | 2026–2027                                          |
-
----
-
-# 📌 Project Overview
-
-**Book Tracker** is an interactive frontend web application designed to help users organize and monitor their reading journey.
-
-The application provides a centralized reading library where users can record books, track their reading status, add ratings and reflections, and view statistics about their reading collection.
-
-The project applies **HTML, CSS, and JavaScript** to create a functional browser-based application with dynamic content and user interactions.
+| Information | Details |
+|---|---|
+| Course | MO-IT161 – Web Systems and Technology |
+| Program | Bachelor of Science in Information Technology |
+| Group | Group 31 |
+| Academic Year | 2026–2027 |
+| MS1 | Interactive Frontend Web Application |
+| MS2 | Backend Development and Frontend Integration |
+| Project Type | Full-Stack Web Application |
 
 ---
 
-# 🎯 Project Goal
+## 🎯 Project Objectives
 
-The main goal of Book Tracker is to provide users with a simple and organized way to manage their personal reading collection and monitor their reading progress.
+Book Tracker aims to provide an organized and user-friendly way to manage a personal reading collection.
 
-The project aims to demonstrate the practical application of:
+The project demonstrates the development of an interactive frontend, backend API integration, data validation, CRUD operations, and persistent storage.
 
-* HTML webpage structure
-* CSS visual presentation
-* JavaScript interactivity
-* Form processing
-* Input validation
-* Dynamic content rendering
-* LocalStorage data persistence
-* CRUD operations
-* Conditional interactions
-* Data visualization
-* User feedback
+The application allows users to:
+
+- Organize books by genre and subgenre.
+- Track reading status and reading dates.
+- Add ratings and personal reflections.
+- Create, view, edit, and delete book records.
+- Monitor reading progress using dashboard statistics and charts.
+- Save book records to a JSON file through a backend REST API.
 
 ---
 
-# 👥 Intended Users
+# 🖥️ Milestone 1 — Interactive Frontend Web Application
 
-Book Tracker is intended for readers who want to:
+Milestone 1 focused on building the interactive user interface and implementing the core book-tracking features.
 
-* Organize their personal book collection
-* Track books they are currently reading
-* Keep records of completed books
-* Record books they did not finish
-* Maintain a to-read list
-* Organize books by genre and subgenre
-* Record ratings
-* Write personal reflections
-* View reading statistics
+### Frontend Features
 
-The interface is designed to keep reading information organized and understandable for general users.
+**Reading Dashboard**
+- Displays total books, completed books, books currently being read, DNF books, books to read, and average rating.
+- Updates statistics when the book collection changes.
 
----
+**Reading Insights**
+- Displays genre distribution through a horizontal bar chart.
+- Displays reading-status distribution through a doughnut chart.
+- Provides an empty state when there are no books to display.
 
-# ✨ Application Features
+**Book Management**
+- Add new books through a form.
+- View saved books in the reading library.
+- Edit existing book information.
+- Delete books with a confirmation dialog.
 
-## 1. 📊 Reading Dashboard
+**Book Information**
 
-The Reading Dashboard provides an overview of the user's reading collection.
+Each book can contain:
 
-It dynamically displays:
+- Title and author
+- Main genre and subgenre
+- Main characters
+- Start date and end date
+- Reading status
+- Rating
+- Personal reflection
 
-* **Total Books**
-* **Completed**
-* **Reading**
-* **DNF**
-* **To Read**
-* **Average Rating**
+**Dynamic Genre Selection**
+- Loads subgenres based on the selected main genre.
+- Resets the subgenre selection when appropriate.
 
-The displayed values are calculated from the current book records.
+**Form Validation and User Feedback**
+- Validates required book information.
+- Checks reading dates.
+- Displays validation feedback and toast notifications.
+- Provides meaningful empty states and delete confirmation.
 
-When books are added, edited, or deleted, the dashboard is refreshed to reflect the updated collection.
-
----
-
-# 2. 📈 Reading Insights
-
-The application provides visual summaries of the user's reading collection.
-
-### Genre Distribution
-
-A horizontal bar chart displays the number of books belonging to each main genre.
-
-### Reading Status
-
-A doughnut chart displays the distribution of:
-
-* TBR
-* Reading
-* Completed
-* DNF
-
-If no books exist, the application displays an informative empty state instead of an empty chart.
+**User Interface**
+- Maintains the existing Book Tracker design.
+- Uses organized sections, forms, book cards, dashboard cards, and charts.
+- Includes responsive styling for different screen sizes.
 
 ---
 
-# 3. ➕ Add a Book
+# ⚙️ Milestone 2 — Backend Development
 
-Users can add a book through the **Add a Book** form.
+Milestone 2 extends the existing frontend by introducing a backend server and connecting the book-management functionality to a REST API.
 
-### Book Information
+### Backend Technologies
 
-Users can enter:
+| Technology | Purpose |
+|---|---|
+| Node.js | Runs JavaScript on the server |
+| Express.js | Creates the server and REST API endpoints |
+| REST API | Enables communication between the frontend and backend |
+| JSON file | Stores book records persistently |
+| `fs/promises` | Reads and writes the JSON data file |
+| `crypto` | Generates unique identifiers for new book records |
 
-* Book Title
-* Author
-* Main Genre
-* Subgenre
-* Main Characters
+### Backend Features
 
-### Reading Details
+**1. Book Creation**
 
-Users can enter:
+The frontend sends a request to the API when a user adds a book. The backend validates the request, creates the book record, and saves it to the JSON file.
 
-* Start Date
-* End Date
-* Reading Status
+**2. Book Retrieval**
 
-### Review
+The frontend requests saved book records from the backend. Retrieved records are used to display the reading library and update dashboard statistics and charts.
 
-Users can provide:
+**3. Book Updating**
 
-* Rating
-* Reflection
+The backend locates an existing book by its ID and saves its updated information without creating a duplicate record.
 
-The form is divided into logical sections to make information entry easier to understand.
+**4. Book Deletion**
+
+The backend removes the selected book record from the JSON file and returns a response confirming the operation.
+
+**5. Persistent Storage**
+
+Book records are stored in `data/books.json`. The records remain available after the Node.js server stops and starts again, provided the same data file is retained.
+
+**6. Request Validation and Error Handling**
+
+The API validates required book fields and provides appropriate responses for invalid requests, missing book records, and server errors.
+
+**7. Frontend Integration**
+
+The existing frontend communicates with the backend through `js/bookService.js`. The visual design and unrelated frontend features are retained.
 
 ---
 
-# 4. 🏷️ Dynamic Genre and Subgenre Selection
+## 🔌 REST API Endpoints
 
-The application provides a dynamic genre and subgenre system.
+The backend provides the following endpoints:
 
-Users first select a **Main Genre**.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/api/books` | Retrieve all books |
+| `POST` | `/api/books` | Add a new book |
+| `PUT` | `/api/books/:id` | Update an existing book |
+| `DELETE` | `/api/books/:id` | Delete a book by ID |
 
-The application then dynamically loads the corresponding subgenres.
+### API Request and Response Behavior
 
-For example:
+- `GET /api/books` returns a JSON array of book records.
+- `POST /api/books` returns the created book and an HTTP `201` status when successful.
+- `PUT /api/books/:id` returns the updated book when successful.
+- `DELETE /api/books/:id` returns a success message when the record is deleted.
+- Invalid requests return an error response.
+- Requests for book IDs that do not exist return an HTTP `404` response.
 
-```text
-Main Genre: Manga
+### Book Data Structure
 
-Subgenres:
-- Shonen
-- Shojo
-- Seinen
-- Josei
-- Isekai
-- Slice of Life
-- Sports
-- Romance
-- Fantasy
-- Horror
+Book records follow the existing frontend data structure.
+
+```json
+{
+  "id": "unique-book-id",
+  "title": "Example Book",
+  "author": "Example Author",
+  "startDate": "2026-10-24",
+  "endDate": "",
+  "genre": "Fantasy",
+  "subgenre": "High Fantasy",
+  "status": "Reading",
+  "rating": 5,
+  "characters": "Example Character",
+  "lesson": "Personal reading reflection",
+  "createdAt": "2026-10-24T12:00:00.000Z"
+}
 ```
 
-The subgenre list changes depending on the selected main genre.
-
-This prevents users from selecting a subgenre before selecting its corresponding main genre.
+The example above illustrates the record structure. Actual records use the values entered through the application.
 
 ---
 
-# 5. ✅ Form Validation
+## 💾 Data Storage
 
-The application validates the user's input before saving a book.
+The current implementation uses a JSON file for book records instead of browser `localStorage` as the primary storage mechanism.
 
-The validation checks:
+**Storage file:** `data/books.json`
 
-* Book title
-* Author
-* Main genre
-* Subgenre
-* Start date
-* End date
-* Reading status
-* Rating
-* Reflection
+The file starts with an empty JSON array:
 
-The application also checks the relationship between the start and end dates.
+```json
+[]
+```
 
-An end date cannot be earlier than the start date.
+When books are added, updated, or deleted, the backend writes the changes to this file.
 
-When invalid information is entered:
+This approach provides persistent storage across server restarts without requiring a separate database or external cloud-storage service.
 
-1. The invalid field receives an error style.
-2. The user receives a notification.
-3. The invalid field receives focus so it can be corrected.
+### Storage Scope
 
-This helps prevent incomplete or invalid book records from being saved.
+- Book records are managed through the REST API.
+- The JSON file stores the book collection.
+- The application does not use a remote database.
+- User authentication and cloud synchronization are not included in the current scope.
 
 ---
 
-# 6. 📚 Reading Library
-
-The **My Reading Library** section displays saved books.
-
-Each book card can display:
-
-* Book title
-* Author
-* Reading status
-* Main genre
-* Subgenre
-* Rating
-* Reading dates
-* Reflection
-
-The library updates automatically after adding, editing, or deleting a book.
-
-If there are no saved books, an empty-state message is displayed.
-
----
-
-# 7. ✏️ Edit Book
-
-Users can edit an existing book record.
-
-Selecting **Edit** loads the selected book's information into the form.
-
-The following information can be edited:
-
-* Title
-* Author
-* Start date
-* End date
-* Main genre
-* Subgenre
-* Reading status
-* Rating
-* Characters
-* Reflection
-
-When editing:
+## 🏗️ Project Structure
 
 ```text
-Save Book
-```
-
-changes to:
-
-```text
-Update Reading Journey
-```
-
-After the update is submitted, the library and dashboard are refreshed.
-
----
-
-# 8. 🗑️ Delete Book
-
-Users can remove a book from their reading library.
-
-Before deletion, the application displays a confirmation dialog:
-
-```text
-Are you sure you want to remove this book from your bookshelf?
-```
-
-The book is only removed after the user confirms the action.
-
-After deletion:
-
-* The library is refreshed.
-* Dashboard statistics are updated.
-* Charts are updated.
-* A notification confirms the removal.
-
-This helps prevent accidental deletion.
-
----
-
-# 9. 💭 Book Reflection
-
-Users can write a reflection about each book.
-
-The reflection is hidden by default to keep the book card organized.
-
-Users can select:
-
-```text
-▼ Read Lesson
-```
-
-to display the reflection.
-
-The control changes to:
-
-```text
-▲ Hide Lesson
-```
-
-when the reflection is expanded.
-
-This keeps additional information available without making every book card unnecessarily long.
-
----
-
-# 10. 🔔 User Feedback
-
-The application provides toast notifications after important actions.
-
-Examples include:
-
-### Book Added
-
-```text
-Book Added
-"The book" has been added to your reading library.
-```
-
-### Book Updated
-
-```text
-Reading Journey Updated
-"The book" has been updated successfully.
-```
-
-### Book Removed
-
-```text
-Book Removed
-The book has been removed from your bookshelf.
-```
-
-Validation errors also provide feedback when required information is missing or invalid.
-
----
-
-# 💾 Data Storage
-
-Book records are stored using the browser's **LocalStorage API**.
-
-The application uses a dedicated `bookService.js` module for book data operations.
-
-The service provides:
-
-```text
-getBooks()
-addBook()
-updateBook()
-deleteBook()
-```
-
-The storage layer separates book data management from the main application logic.
-
-### Current Storage Scope
-
-The current milestone uses browser-based LocalStorage.
-
-Therefore:
-
-* Data is stored locally in the browser.
-* No backend server is currently required.
-* No remote database is currently used.
-* Data is associated with the browser/device where it was saved.
-
----
-
-# 🏗️ Project Structure
-
-```text
-Book-Tracker/
+WST-Group-31-MS1/
 │
 ├── index.html
 ├── style.css
+├── README.md
+├── package.json
+├── package-lock.json
+├── server.js
+│
+├── data/
+│   └── books.json
 │
 └── js/
     ├── app.js
@@ -383,446 +230,215 @@ Book-Tracker/
     ├── books.js
     ├── charts.js
     ├── genres.js
+    ├── storage.js
     └── ui.js
 ```
 
+### File Responsibilities
+
+| File | Responsibility |
+|---|---|
+| `index.html` | Defines the website structure and frontend sections |
+| `style.css` | Controls the layout, colors, typography, components, and responsive styling |
+| `server.js` | Configures the Express server, JSON storage operations, API endpoints, and error handling |
+| `package.json` | Defines the project metadata, dependencies, and start command |
+| `package-lock.json` | Records the installed dependency versions |
+| `data/books.json` | Stores book records |
+| `js/app.js` | Coordinates form submission, validation, editing, deletion, and interface updates |
+| `js/bookService.js` | Sends frontend requests to the REST API |
+| `js/books.js` | Handles book-card rendering and related library functionality |
+| `js/charts.js` | Creates and updates the genre and reading-status charts |
+| `js/genres.js` | Defines the main genres and subgenres |
+| `js/storage.js` | Contains the existing storage utility |
+| `js/ui.js` | Supports interface-related functionality |
+
 ---
 
-# 📂 File Responsibilities
+## 🛠️ Technologies Used
 
-| File             | Responsibility                                                                                |
-| ---------------- | --------------------------------------------------------------------------------------------- |
-| `index.html`     | Defines the main webpage structure, dashboard, forms, charts, and library                     |
-| `style.css`      | Controls layout, colors, typography, cards, forms, buttons, and responsive styling            |
-| `app.js`         | Coordinates form submission, validation, genre interaction, and UI refresh                    |
-| `bookService.js` | Handles LocalStorage-based book data operations                                               |
-| `books.js`       | Handles book cards, library rendering, reflections, dashboard calculations, and notifications |
-| `charts.js`      | Creates and updates genre and reading-status charts                                           |
-| `genres.js`      | Stores the main genre and subgenre data                                                       |
-| `ui.js`          | Supports user-interface functionality                                                         |
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+- Chart.js
+- Google Fonts
+
+### Backend
+- Node.js
+- Express.js
+- REST API
+- JSON file storage
+
+### Development Tools
+- Visual Studio Code
+- Git
+- GitHub
+- npm
 
 ---
 
-# 🔄 Application Workflow
+## 🚀 How to Run the Application
 
-## Adding a Book
+### Requirements
 
-```text
-Open Book Tracker
-       ↓
-Open Add a Book
-       ↓
-Enter Book Information
-       ↓
-Select Main Genre
-       ↓
-Select Subgenre
-       ↓
-Enter Reading Details
-       ↓
-Add Rating and Reflection
-       ↓
-Save Book
-       ↓
-Validate Input
-       ↓
-Store Book
-       ↓
-Update Library
-       ↓
-Update Dashboard
-       ↓
-Update Charts
+- Node.js and npm installed
+- A modern web browser
+- Git, if cloning the repository
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/rosecrosy/WST-Group-31-MS1.git
 ```
 
----
+### 2. Enter the Project Folder
 
-## Editing a Book
-
-```text
-My Reading Library
-       ↓
-Select Edit
-       ↓
-Load Existing Book Information
-       ↓
-Modify Information
-       ↓
-Update Reading Journey
-       ↓
-Save Changes
-       ↓
-Update Library
-       ↓
-Update Dashboard
-       ↓
-Update Charts
+```bash
+cd WST-Group-31-MS1
 ```
 
----
+### 3. Install Dependencies
 
-## Deleting a Book
-
-```text
-My Reading Library
-       ↓
-Select Delete
-       ↓
-Confirmation Dialog
-       ↓
-Confirm Deletion
-       ↓
-Remove Book
-       ↓
-Update Library
-       ↓
-Update Dashboard
-       ↓
-Update Charts
+```bash
+npm install
 ```
 
----
+### 4. Start the Backend Server
 
-# 🧩 Implementation Dependencies
-
-The application is organized into multiple frontend components.
-
-```text
-HTML
- ↓
-CSS
- ↓
-JavaScript
- ↓
-LocalStorage
+```bash
+npm start
 ```
 
-The main application coordinates the JavaScript modules:
+The server should start at:
 
 ```text
-app.js
- ├── bookService.js
- ├── books.js
- ├── charts.js
- └── genres.js
+http://localhost:3000
 ```
 
-### External Dependency
+### 5. Open the Application
 
-The application uses **Chart.js** for data visualization.
+Open the following address in your browser:
 
-Chart.js is loaded through a CDN in the HTML file.
+**http://localhost:3000**
 
----
+To check the API directly, visit:
 
-# 🛠️ Technologies Used
+**http://localhost:3000/api/books**
 
-* **HTML5** — webpage structure
-* **CSS3** — visual presentation and responsive layout
-* **JavaScript** — application logic and interactivity
-* **LocalStorage API** — browser-based data persistence
-* **Chart.js** — data visualization
-* **Google Fonts** — typography
-* **GitHub** — source-code repository
-* **Visual Studio Code** — development environment
+The API should return a JSON array containing the saved book records, or `[]` when the collection is empty.
+
+**Important:** Run the application through the Express server. Live Server alone does not run the backend API.
 
 ---
 
-# 📋 Development Tasks
+## 🧪 Testing Checklist
 
-The frontend development was organized into the following major task areas.
+The following checks can be used to verify the application.
 
-## Structure Development
+### Frontend
+- [ ] Website loads with the existing design.
+- [ ] Main genre selection displays the appropriate subgenres.
+- [ ] Dashboard counts update correctly.
+- [ ] Genre and reading-status charts display correctly.
+- [ ] Book forms and notifications work as expected.
 
-* Create the HTML document structure
-* Create the dashboard
-* Create the reading insights section
-* Create the Add a Book form
-* Create the reading library
-* Create empty states
-* Organize the page into logical sections
+### Backend API
+- [ ] `GET /api/books` retrieves book records.
+- [ ] `POST /api/books` creates a book record.
+- [ ] `PUT /api/books/:id` updates an existing record.
+- [ ] `DELETE /api/books/:id` removes a record.
+- [ ] Invalid requests return appropriate error responses.
+- [ ] Requests for nonexistent book IDs return `404`.
 
-## Styling Development
-
-* Establish the visual theme
-* Define colors and typography
-* Design dashboard cards
-* Style forms and inputs
-* Design book cards
-* Style status indicators
-* Design buttons
-* Add hover and interaction states
-* Implement responsive layouts
-
-## Functionality Development
-
-* Implement book creation
-* Implement book retrieval
-* Implement book updating
-* Implement book deletion
-* Implement LocalStorage persistence
-* Implement form validation
-* Implement date validation
-* Implement dynamic genre selection
-* Implement dynamic subgenre selection
-* Implement dashboard calculations
-* Implement genre chart
-* Implement status chart
-* Implement reflection toggle
-* Implement toast notifications
-* Implement delete confirmation
-
-## Testing and Refinement
-
-* Test valid book submission
-* Test incomplete form submission
-* Test genre and subgenre interaction
-* Test date validation
-* Test book editing
-* Test book deletion
-* Test delete confirmation
-* Test dashboard updates
-* Test chart updates
-* Test reflection interaction
-* Test LocalStorage persistence
-* Review visual consistency
-* Refine user feedback
+### Data Persistence and Integration
+- [ ] Added books appear in the reading library.
+- [ ] Updated books display the latest information.
+- [ ] Deleted books no longer appear in the collection.
+- [ ] Changes are reflected in `data/books.json`.
+- [ ] Saved records remain after restarting the server.
+- [ ] The frontend refreshes the library after successful API operations.
 
 ---
 
-# 🛡️ Error Prevention
+## 🔍 Milestone Alignment
 
-Book Tracker includes several mechanisms designed to prevent incorrect user actions.
+### Milestone 1 — Interactive Frontend Web Application
 
-### Required Field Validation
+MS1 established the Book Tracker interface and its core interactive features.
 
-Important book information must be provided before the record can be saved.
+| Area | Implementation |
+|---|---|
+| Webpage structure | HTML-based dashboard, forms, charts, and reading library |
+| Visual presentation | CSS styling, layouts, cards, and responsive components |
+| Interactivity | JavaScript form handling, validation, and dynamic updates |
+| Book management | Create, read, update, and delete functionality |
+| Reading insights | Dashboard statistics and charts |
+| User feedback | Notifications, confirmation dialogs, and empty states |
 
-### Date Validation
+### Milestone 2 — Backend Development
 
-The application checks that the end date is not earlier than the start date.
+MS2 extends the existing application with server-side processing and persistent JSON-file storage.
 
-### Dynamic Subgenre Selection
-
-The subgenre field depends on the selected main genre.
-
-### Delete Confirmation
-
-Users must confirm before a book is deleted.
-
-### Visual Error State
-
-Invalid fields receive a visible error style.
-
-### Empty States
-
-The application provides meaningful messages when there are no books to display.
-
----
-
-# 🎨 User Interface Design
-
-The interface uses a clean, reading-focused visual design.
-
-The design emphasizes:
-
-* Clear section hierarchy
-* Consistent spacing
-* Readable typography
-* Rounded cards
-* Consistent buttons
-* Clear form labels
-* Status indicators
-* Organized book cards
-* Visual feedback
-* Minimal visual clutter
-
-The goal is to keep the application easy to understand while maintaining a consistent visual identity.
+| Area | Implementation |
+|---|---|
+| Server setup | Node.js and Express.js |
+| API communication | REST endpoints for book management |
+| Data persistence | `data/books.json` |
+| CRUD operations | API-based creation, retrieval, updating, and deletion |
+| Validation | Required-field checks and error responses |
+| Frontend integration | Existing JavaScript service connected to the backend |
+| Persistence testing | Verification that records remain after a server restart |
 
 ---
 
-# 📱 Responsive Design
+## 📌 Project Scope
 
-The application includes responsive layout rules to adapt the interface to different screen sizes.
+### Included in the Current Implementation
 
-Major areas such as:
+- Interactive book tracking
+- Reading dashboard and charts
+- Dynamic genre and subgenre selection
+- Book creation, retrieval, updating, and deletion
+- Reading status, dates, ratings, and reflections
+- Form validation and user feedback
+- Express.js backend
+- REST API integration
+- JSON-file storage
+- Data persistence across server restarts
 
-* Dashboard cards
-* Reading insights
-* Forms
-* Book library
+### Outside the Current Scope
 
-use responsive layout techniques so the interface can adapt to smaller displays.
+- User authentication and account management
+- Remote database integration
+- Cloud synchronization
+- Multi-user access
+- Online book database integration
 
-Responsive behavior should be tested before final submission.
-
----
-
-# 🧪 Testing Checklist
-
-The following scenarios should be tested before submission:
-
-### Book Creation
-
-* [ ] Add a valid book
-* [ ] Verify the book appears in the library
-* [ ] Verify dashboard values update
-* [ ] Verify charts update
-
-### Validation
-
-* [ ] Submit with an empty title
-* [ ] Submit with an empty author
-* [ ] Submit without a genre
-* [ ] Submit without a subgenre
-* [ ] Submit without a start date
-* [ ] Submit without a status
-* [ ] Submit without a rating
-* [ ] Submit without a reflection
-* [ ] Enter an end date earlier than the start date
-
-### Genre Interaction
-
-* [ ] Select a main genre
-* [ ] Verify its subgenres appear
-* [ ] Change the main genre
-* [ ] Verify the subgenre list updates
-* [ ] Verify the subgenre resets appropriately
-
-### Editing
-
-* [ ] Select Edit
-* [ ] Verify existing information loads
-* [ ] Change information
-* [ ] Save the update
-* [ ] Verify the updated information appears
-
-### Deletion
-
-* [ ] Select Delete
-* [ ] Cancel deletion
-* [ ] Confirm deletion
-* [ ] Verify the book disappears
-* [ ] Verify dashboard values update
-* [ ] Verify charts update
-
-### Other Interactions
-
-* [ ] Expand a reflection
-* [ ] Collapse a reflection
-* [ ] Refresh the browser
-* [ ] Verify stored books remain available
-* [ ] Test the application on different screen sizes
+These are potential future improvements rather than features of the current implementation.
 
 ---
 
-# 🔍 Milestone 1 Alignment
+## 🔮 Future Improvements
 
-Book Tracker was developed to address the main requirements of the **Milestone 1: Interactive Frontend Web Application**.
+Possible enhancements include:
 
-| Milestone Requirement                      | Book Tracker Implementation                                                                                             |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| Meaningful webpage structure using HTML    | Dashboard, Reading Insights, Add a Book, Reading Library, and footer sections                                           |
-| Organized visual presentation using CSS    | Consistent layout, typography, cards, forms, buttons, spacing, and responsive styling                                   |
-| Interactive functionality using JavaScript | Form processing, validation, CRUD operations, dynamic genres, dashboard updates, charts, reflections, and notifications |
-| Alignment with application purpose         | Features focus on organizing books and tracking reading activity                                                        |
-| Evidence of review and refinement          | Validation, confirmation dialogs, empty states, feedback messages, dynamic interactions, and UI refinements             |
-
----
-
-# 📋 Scope Review
-
-## Included in the Current Milestone
-
-The current frontend scope includes:
-
-* Interactive book tracking
-* Add book functionality
-* Edit book functionality
-* Delete book functionality
-* LocalStorage persistence
-* Genre selection
-* Dynamic subgenre selection
-* Reading status tracking
-* Ratings
-* Reflections
-* Dashboard statistics
-* Genre visualization
-* Reading-status visualization
-* Input validation
-* Delete confirmation
-* Toast notifications
-* Empty states
-
-## Outside the Current Scope
-
-The following are not currently implemented:
-
-* Backend server
-* Remote database
-* User authentication
-* Multi-user accounts
-* Cloud synchronization
-* Online book database integration
-
-These features may be considered as future improvements rather than part of the current frontend milestone.
-
----
-
-# 🔮 Future Improvements
-
-Potential future improvements include:
-
-* Search functionality
-* Book filtering
-* Sorting options
-* Book cover images
-* Reading goals
-* Monthly reading statistics
-* Yearly reading statistics
-* Data export
-* Cloud database integration
-* User accounts
-* Authentication
-* Multi-device synchronization
-
-These features are intentionally documented as future improvements rather than current functionality.
-
-# 🚀 Running the Project
-
-## Requirements
-
-* Modern web browser
-* JavaScript enabled
-* LocalStorage enabled
-* Internet connection for the Chart.js CDN
-
-## Steps
-
-1. Clone or download the repository.
-2. Open the project folder in Visual Studio Code.
-3. Open the project using a local development server.
-4. Open the application in a modern web browser.
-5. Add books and test the interactive features.
-
----
-
-# 📌 Project Status
-
-**Milestone:** Milestone 1
-**Project Type:** Interactive Frontend Web Application
-**Group:** Group 31
-**Status:** Frontend development and refinement
+- Book search, filtering, and sorting
+- Book cover images
+- Reading goals and additional reading statistics
+- Data export
+- Authentication and user accounts
+- Remote database and cloud synchronization
 
 ---
 
 ## 📜 Academic Project
 
-**Course:** MO-IT161 – Web Systems and Technology
-**Program:** Bachelor of Science in Information Technology
-**Milestone:** Milestone 1 – Interactive Frontend Web Application
-**Group:** **Group 31**
-**Academic Year:** 2026–2027
+**Course:** MO-IT161 – Web Systems and Technology  
+**Program:** Bachelor of Science in Information Technology  
+**Group:** Group 31  
+**Academic Year:** 2026–2027  
+**Milestone 1:** Interactive Frontend Web Application  
+**Milestone 2:** Backend Development and Frontend Integration  
 
 ---
 
