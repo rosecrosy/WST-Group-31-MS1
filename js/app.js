@@ -31,22 +31,23 @@ window.deleteBookHandler = async function (bookId) {
     "Are you sure you want to remove this book from your bookshelf?",
   );
 
-  if (!confirmed) {
-    return;
+  if (!confirmed) return;
+
+  try {
+    await deleteBook(bookId);
+    await refreshUI();
+
+    showToast("Book Removed", "The book has been removed from your bookshelf.");
+  } catch (error) {
+    showToast("Error", error.message);
   }
-
-  deleteBook(bookId);
-
-  refreshUI();
-
-  showToast("Book Removed", "The book has been removed from your bookshelf.");
 };
 
 // ===================================
 // Submit Book
 // ===================================
 
-function handleBookSubmit(event) {
+async function handleBookSubmit(event) {
   event.preventDefault();
 
   if (!validateForm()) {
@@ -57,33 +58,38 @@ function handleBookSubmit(event) {
 
   const bookData = createBook(formData);
 
-  if (window.editingBookId) {
-    bookData.id = window.editingBookId;
+  try {
+    if (window.editingBookId) {
+      bookData.id = window.editingBookId;
 
-    updateBook(bookData);
+      await updateBook(bookData);
+      window.editingBookId = null;
 
-    refreshUI();
+      document.getElementById("saveBookBtn").textContent = "Save Book";
 
-    showToast(
-      "Reading Journey Updated",
-      `"${bookData.title}" has been updated successfully.`,
-    );
+      showToast(
+        "Reading Journey Updated",
+        `"${bookData.title}" has been updated successfully.`,
+      );
+    } else {
+      await addBook(bookData);
 
-    window.editingBookId = null;
+      showToast(
+        "Book Added",
+        `"${bookData.title}" has been added to your reading library.`,
+      );
+    }
 
-    document.getElementById("saveBookBtn").textContent = "Save Book";
-  } else {
-    addBook(bookData);
+    await refreshUI();
 
-    refreshUI();
+    bookForm.reset();
 
-    showToast(
-      "Book Added",
-      `"${bookData.title}" has been added to your reading library.`,
-    );
+    subgenreSelect.innerHTML = `
+    <option value="">Select Main Genre First</option>
+  `;
+  } catch (error) {
+    showToast("Error", error.message);
   }
-
-  bookForm.reset();
 
   // Reset subgenre after form reset
   subgenreSelect.innerHTML = `
@@ -224,13 +230,17 @@ window.loadSubgenres = loadSubgenres;
    Refresh UI
 =================================== */
 
-function refreshUI() {
-  window.books = getBooks();
+async function refreshUI() {
+  try {
+    window.books = await getBooks();
 
-  renderLibrary();
-  updateDashboard();
-  updateGenreChart();
-  updateStatusChart();
+    renderLibrary();
+    updateDashboard();
+    updateGenreChart();
+    updateStatusChart();
+  } catch (error) {
+    showToast("Error", error.message);
+  }
 }
 
 /* ===================================

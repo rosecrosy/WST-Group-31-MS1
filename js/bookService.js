@@ -1,67 +1,46 @@
-// ===================================
-// Book Service
-// ===================================
+const API_URL = "/api/books";
 
-const STORAGE_KEY = "bookTrackerBooks";
-
-// ===================================
-// Get Books
-// ===================================
-
-export function getBooks() {
-  const books = localStorage.getItem(STORAGE_KEY);
-
-  return books ? JSON.parse(books) : [];
-}
-
-// ===================================
-// Save Books
-// ===================================
-
-function saveBooks(books) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
-}
-
-// ===================================
-// Add Book
-// ===================================
-
-export function addBook(book) {
-  const books = getBooks();
-
-  books.push(book);
-
-  saveBooks(books);
-}
-
-// ===================================
-// Update Book
-// ===================================
-
-export function updateBook(book) {
-  const books = getBooks();
-
-  const updatedBooks = books.map((existingBook) => {
-    if (existingBook.id === book.id) {
-      return book;
-    }
-
-    return existingBook;
+async function request(url, options = {}) {
+  const response = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...options,
   });
 
-  saveBooks(updatedBooks);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Request failed.");
+  }
+
+  return data;
 }
 
-// ===================================
-// Delete Book
-// ===================================
+// Get all books
+export async function getBooks() {
+  return request(API_URL);
+}
 
-export function deleteBook(bookId) {
-  const books = getBooks();
+// Add a book
+export async function addBook(book) {
+  return request(API_URL, {
+    method: "POST",
+    body: JSON.stringify(book),
+  });
+}
 
-  const updatedBooks = books.filter(
-    (book) => book.id !== bookId
-  );
+// Update a book
+export async function updateBook(book) {
+  return request(`${API_URL}/${encodeURIComponent(book.id)}`, {
+    method: "PUT",
+    body: JSON.stringify(book),
+  });
+}
 
-  saveBooks(updatedBooks);
+// Delete a book
+export async function deleteBook(bookId) {
+  return request(`${API_URL}/${encodeURIComponent(bookId)}`, {
+    method: "DELETE",
+  });
 }

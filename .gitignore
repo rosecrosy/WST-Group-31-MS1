@@ -1,0 +1,11 @@
+
+node_modules/
+data/books.json
+.env
+
+# Ignore duplicate copies
+.git - Copy/
+data - Copy/
+js - Copy/
+node_modules - Copy/
+package-lock - Copy.json
